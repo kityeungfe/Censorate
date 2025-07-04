@@ -1,0 +1,387 @@
+/* Domain Floating Box Chrome Extension - Styles */
+
+/* 悬浮框主容器 */
+.domain-floating-box {
+  position: fixed !important;
+  /* 移除固定的top和right，让JavaScript完全控制位置 */
+  top: 0 !important;
+  left: 0 !important;
+  width: 320px !important;
+  max-width: 90vw !important;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3) !important;
+  z-index: 2147483647 !important; /* 最高层级 */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+  animation: slideInFromRight 0.5s ease-out !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255,255,255,0.2) !important;
+  /* 移除默认的transition，让JavaScript完全控制transform */
+  transition: box-shadow 0.2s ease-out !important;
+  /* 确保transform-origin在中心，避免缩放时的位置偏移 */
+  transform-origin: center center !important;
+}
+
+/* 拖拽状态 - 只影响阴影，不影响transform */
+.domain-floating-box.dragging {
+  box-shadow: 0 12px 48px rgba(0,0,0,0.4) !important;
+  /* 移除transform scale，避免与拖拽位置冲突 */
+  transition: box-shadow 0.1s ease-out !important;
+  /* 确保拖拽时元素保持稳定 */
+  pointer-events: auto !important;
+  will-change: transform !important;
+}
+
+/* 拖拽时禁用所有transform相关的transition */
+.domain-floating-box.dragging * {
+  transition: none !important;
+}
+
+/* 最小化状态 */
+.domain-floating-box.minimized {
+  width: 200px !important;
+}
+
+/* 动画定义 */
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%) !important;
+    opacity: 0 !important;
+  }
+  to {
+    transform: translateX(0) !important;
+    opacity: 1 !important;
+  }
+}
+
+@keyframes slideOutToRight {
+  from {
+    transform: translateX(0) !important;
+    opacity: 1 !important;
+  }
+  to {
+    transform: translateX(100%) !important;
+    opacity: 0 !important;
+  }
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+  20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+}
+
+/* 内容展开/收缩动画 */
+@keyframes expandContent {
+  from {
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+}
+
+@keyframes collapseContent {
+  from {
+    opacity: 1;
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  to {
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+}
+
+/* 悬浮框头部 */
+.domain-floating-box .floating-box-header {
+  background: rgba(0,0,0,0.2) !important;
+  padding: 12px 16px !important;
+  border-radius: 12px 12px 0 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  cursor: grab !important;
+  user-select: none !important;
+  border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+  transition: background-color 0.2s ease !important;
+  /* 确保拖拽区域稳定 */
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.domain-floating-box .floating-box-header:hover {
+  background: rgba(0,0,0,0.3) !important;
+}
+
+.domain-floating-box .floating-box-header:active,
+.domain-floating-box.dragging .floating-box-header {
+  cursor: grabbing !important;
+  background: rgba(0,0,0,0.4) !important;
+}
+
+/* 拖拽时的头部样式 */
+.domain-floating-box.dragging .floating-box-header {
+  transition: none !important;
+}
+
+.domain-floating-box .floating-box-icon {
+  font-size: 18px !important;
+  margin-right: 8px !important;
+}
+
+.domain-floating-box .floating-box-title {
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  flex-grow: 1 !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3) !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.domain-floating-box .floating-box-controls {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.domain-floating-box .floating-box-minimize {
+  background: rgba(255,255,255,0.2) !important;
+  border: none !important;
+  color: white !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  font-size: 18px !important;
+  font-weight: bold !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.3s ease !important;
+  line-height: 1 !important;
+  position: relative !important;
+}
+
+.domain-floating-box .floating-box-minimize:hover {
+  background: rgba(255,255,255,0.35) !important;
+  transform: scale(1.1) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+}
+
+.domain-floating-box .floating-box-minimize:active {
+  transform: scale(0.95) !important;
+  transition: all 0.1s ease !important;
+}
+
+/* 最小化按钮动画效果 */
+.domain-floating-box .floating-box-minimize::before {
+  content: '' !important;
+  position: absolute !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 50% !important;
+  background: rgba(255,255,255,0.1) !important;
+  transform: scale(0) !important;
+  transition: transform 0.3s ease !important;
+}
+
+.domain-floating-box .floating-box-minimize:hover::before {
+  transform: scale(1) !important;
+}
+
+/* 悬浮框内容 */
+.domain-floating-box .floating-box-content {
+  padding: 16px !important;
+  overflow: hidden !important;
+  transition: all 0.3s ease !important;
+}
+
+/* 最小化状态下隐藏内容 */
+.domain-floating-box.minimized .floating-box-content {
+  padding: 0 !important;
+  max-height: 0 !important;
+}
+
+.domain-floating-box .floating-box-info {
+  margin-bottom: 16px !important;
+}
+
+.domain-floating-box .floating-box-info p {
+  margin: 8px 0 !important;
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+}
+
+.domain-floating-box .floating-box-info strong {
+  font-weight: 600 !important;
+  color: #fff !important;
+}
+
+.domain-floating-box .floating-box-info code {
+  background: rgba(0,0,0,0.2) !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace !important;
+  font-size: 12px !important;
+  color: #e0e0e0 !important;
+  word-break: break-all !important;
+}
+
+/* 操作按钮区域 */
+.domain-floating-box .floating-box-actions {
+  display: flex !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+}
+
+.domain-floating-box .action-btn {
+  background: rgba(255,255,255,0.15) !important;
+  border: 1px solid rgba(255,255,255,0.3) !important;
+  color: white !important;
+  padding: 8px 12px !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+  flex: 1 !important;
+  min-width: 80px !important;
+  text-align: center !important;
+}
+
+.domain-floating-box .action-btn:hover {
+  background: rgba(255,255,255,0.25) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+}
+
+.domain-floating-box .action-btn:active {
+  transform: translateY(0) !important;
+}
+
+/* 通知样式 */
+.floating-box-notification {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  background: rgba(0,0,0,0.9) !important;
+  color: white !important;
+  padding: 12px 24px !important;
+  border-radius: 8px !important;
+  z-index: 2147483648 !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important;
+  animation: fadeInOut 2s ease-in-out !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+}
+
+/* 响应式设计 */
+@media (max-width: 480px) {
+  .domain-floating-box {
+    width: 280px !important;
+    /* 移除固定位置，让JavaScript控制 */
+  }
+
+  .domain-floating-box.minimized {
+    width: 180px !important;
+  }
+
+  .domain-floating-box .floating-box-header {
+    padding: 10px 12px !important;
+  }
+
+  .domain-floating-box .floating-box-title {
+    font-size: 14px !important;
+  }
+
+  .domain-floating-box .floating-box-content {
+    padding: 12px !important;
+  }
+
+  .domain-floating-box .floating-box-actions {
+    flex-direction: column !important;
+  }
+
+  .domain-floating-box .action-btn {
+    flex: none !important;
+    width: 100% !important;
+  }
+
+  .domain-floating-box .floating-box-minimize {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 16px !important;
+  }
+}
+
+/* 触摸设备优化 */
+@media (hover: none) and (pointer: coarse) {
+  .domain-floating-box .floating-box-header {
+    cursor: grab !important;
+    padding: 14px 16px !important;
+  }
+
+  .domain-floating-box .floating-box-minimize {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 20px !important;
+  }
+
+  .domain-floating-box .floating-box-minimize:hover {
+    transform: none !important;
+    background: rgba(255,255,255,0.3) !important;
+  }
+}
+
+/* 防止与页面样式冲突 */
+.domain-floating-box * {
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+
+.domain-floating-box p,
+.domain-floating-box button,
+.domain-floating-box div,
+.domain-floating-box span {
+  all: unset !important;
+}
+
+/* 重新应用必要的样式 */
+.domain-floating-box p {
+  display: block !important;
+  margin: 8px 0 !important;
+}
+
+.domain-floating-box button {
+  display: inline-flex !important;
+  cursor: pointer !important;
+}
+
+.domain-floating-box div {
+  display: block !important;
+}
+
+.domain-floating-box span {
+  display: inline !important;
+}

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <style>
+      body {
+        width: 350px;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        margin: 0;
+      }
+      
+      h1 {
+        margin: 0 0 10px 0;
+        font-size: 24px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      }
+      
+      p {
+        margin: 10px 0;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+      
+      .emoji {
+        font-size: 48px;
+        margin: 10px 0;
+        display: block;
+      }
+      
+      .input-section {
+        margin: 20px 0;
+        text-align: left;
+      }
+      
+      input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+      
+      button {
+        background: rgba(255,255,255,0.2);
+        border: 2px solid white;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 12px;
+        transition: all 0.3s ease;
+        margin: 2px;
+      }
+      
+      button:hover {
+        background: rgba(255,255,255,0.3);
+        transform: translateY(-1px);
+      }
+      
+      .domain-list {
+        margin: 20px 0;
+        text-align: left;
+      }
+      
+      .domain-list h3 {
+        font-size: 16px;
+        margin: 10px 0;
+        text-align: center;
+      }
+      
+      .domain-list ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        max-height: 150px;
+        overflow-y: auto;
+      }
+      
+      .domain-list li {
+        background: rgba(255,255,255,0.1);
+        margin: 5px 0;
+        padding: 8px 12px;
+        border-radius: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
+      }
+      
+      .domain-list .domain-name {
+        flex-grow: 1;
+        word-break: break-all;
+      }
+      
+      .delete-btn {
+        background: rgba(255,0,0,0.3);
+        border: 1px solid rgba(255,0,0,0.5);
+        padding: 4px 8px;
+        font-size: 10px;
+        border-radius: 10px;
+        margin-left: 8px;
+      }
+      
+      .delete-btn:hover {
+        background: rgba(255,0,0,0.5);
+      }
+      
+      .footer {
+        margin-top: 20px;
+        font-size: 12px;
+        opacity: 0.8;
+      }
+    </style>
+  </head>
+  <body>
+    <span class="emoji">🌐</span>
+    <h1>域名悬浮框</h1>
+    <p>为指定域名添加悬浮框</p>
+    
+    <div class="input-section">
+      <input type="text" id="domainInput" placeholder="输入域名 (例: example.com)" />
+      <button id="addDomain">添加域名</button>
+    </div>
+    
+    <div class="domain-list">
+      <h3>已添加的域名:</h3>
+      <ul id="domainList"></ul>
+    </div>
+    
+    <div class="footer">
+      <p>Domain Floating Box v1.0</p>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>
